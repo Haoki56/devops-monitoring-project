@@ -13,17 +13,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Show files
-        run: ls -la
-
-      - name: Check README exists
-        run: test -f README.md
-
-      - name: Check prometheus config exists
-        run: test -f prometheus.yml
-
-      - name: Check docker compose config exists
-        run: test -f docker-compose.yaml
+      - name: Check files
+        run:
+          ls -la
+          test -f README.md
+          test -f docker-compose.yaml
+          test -f prometheus.yml
 
       - name: Validate docker compose
         run: docker compose -f docker-compose.yaml config
