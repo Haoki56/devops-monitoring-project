@@ -1,0 +1,31 @@
+name: DevOps Monitoring CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check files
+        run: |
+          ls -la
+          test -f README.md
+          test -f docker-compose.yaml
+          test -f prometheus.yml
+          test -f alert.rules.yml
+          test -f Makefile
+
+      - name: Validate docker compose
+        run: docker compose -f docker-compose.yaml config
+
+      - name: Run Prometheus config check
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}/prome
