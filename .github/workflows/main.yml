@@ -19,9 +19,16 @@ jobs:
           test -f README.md
           test -f docker-compose.yaml
           test -f prometheus.yml
+          test -f alert.rules.yml
+          test -f Makefile
 
-      - name: Check Makefile exists
-        run: test -f Makefile
-   
       - name: Validate docker compose
         run: docker compose -f docker-compose.yaml config
+
+      - name: Run Prometheus config check
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}/prometheus.yml:/etc/prometheus/prometheus.yml \
+            -v ${{ github.workspace }}/alert.rules.yml:/etc/prometheus/alert.rules.yml \
+            prom/prometheus \
+            promtool check config /etc/prometheus/prometheus.yml
