@@ -28,7 +28,8 @@ jobs:
       - name: Run Prometheus config check
         run: |
           docker run --rm \
+            --entrypoint promtool \
             -v ${{ github.workspace }}/prometheus.yml:/etc/prometheus/prometheus.yml \
             -v ${{ github.workspace }}/alert.rules.yml:/etc/prometheus/alert.rules.yml \
             prom/prometheus \
-            promtool check config /etc/prometheus/prometheus.yml
+            check config /etc/prometheus/prometheus.yml
