@@ -1,0 +1,23 @@
+name: DevOps Monitoring CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Show files
+        run: ls -la
+
+      - name: Validate README exists
+        run: test -f README.md
+
+      - name: Show project info
+        run: cat README.md
