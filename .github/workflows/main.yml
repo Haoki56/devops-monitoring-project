@@ -20,5 +20,8 @@ jobs:
           test -f docker-compose.yaml
           test -f prometheus.yml
 
+      - name: Check Makefile exists
+        run: test -f Makefile
+   
       - name: Validate docker compose
         run: docker compose -f docker-compose.yaml config
