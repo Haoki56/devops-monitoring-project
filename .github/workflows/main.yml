@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  check:
+  validate:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,8 +16,14 @@ jobs:
       - name: Show files
         run: ls -la
 
-      - name: Validate README exists
+      - name: Check README exists
         run: test -f README.md
 
-      - name: Show project info
-        run: cat README.md
+      - name: Check prometheus config exists
+        run: test -f prometheus.yml
+
+      - name: Check docker compose config exists
+        run: test -f docker-compose.yaml
+
+      - name: Validate docker compose
+        run: docker compose -f docker-compose.yaml config
