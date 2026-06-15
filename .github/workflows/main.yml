@@ -17,19 +17,19 @@ jobs:
         run: |
           ls -la
           test -f README.md
-          test -f docker-compose.yaml
-          test -f prometheus.yml
-          test -f alert.rules.yml
           test -f Makefile
+          test -f docker/docker-compose.yaml
+          test -f docker/prometheus/prometheus.yml
+          test -f docker/prometheus/alert.rules.yml
 
       - name: Validate docker compose
-        run: docker compose -f docker-compose.yaml config
+        run: docker compose -f docker/docker-compose.yaml config
 
       - name: Run Prometheus config check
         run: |
           docker run --rm \
             --entrypoint promtool \
-            -v ${{ github.workspace }}/prometheus.yml:/etc/prometheus/prometheus.yml \
-            -v ${{ github.workspace }}/alert.rules.yml:/etc/prometheus/alert.rules.yml \
+            -v ${{ github.workspace }}/docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml \
+            -v ${{ github.workspace }}/docker/prometheus/alert.rules.yml:/etc/prometheus/alert.rules.yml \
             prom/prometheus \
             check config /etc/prometheus/prometheus.yml
