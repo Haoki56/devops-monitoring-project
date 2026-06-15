@@ -1,0 +1,25 @@
+---
+- hosts: local
+  become: yes
+
+  tasks:
+    - name: Create monitoring directory
+      file:
+        path: /opt/monitoring
+        state: directory
+        mode: '0755'
+
+    - name: Copy docker directory
+      copy:
+        src: ../../docker/
+        dest: /opt/monitoring/docker/
+
+    - name: Copy Makefile
+      copy:
+        src: ../../Makefile
+        dest: /opt/monitoring/Makefile
+
+    - name: Start monitoring stack
+      command: docker compose -f docker/docker-compose.yaml up -d --no-recreate
+      args:
+        chdir: /opt/monitoring
