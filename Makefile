@@ -15,3 +15,6 @@ restart:
 
 check:
 	docker compose -f docker/docker-compose.yaml config
+
+health:
+	./scripts/healthcheck.sh

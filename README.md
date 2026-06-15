@@ -17,3 +17,21 @@
 
 ```bash
 docker compose up -d
+
+## Project Structure
+
+```text
+devops-monitoring-project/
+├── docker/
+│   ├── docker-compose.yaml
+│   └── prometheus/
+│       ├── prometheus.yml
+│       └── alert.rules.yml
+├── scripts/
+│   └── healthcheck.sh
+├── docs/
+│   └── architecture.md
+├── .github/workflows/
+│   └── main.yml
+├── Makefile
+└── README.md
